@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Birthday, Sweetheart! 🎂</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <section id="section1" class="section active">
+        <div class="header">
+          <h1 class="title">Teruntuk Mathiew aka 'Sug'nya aku.</h1>
+        </div>
+        <div class="content">
+          <div class="photo">
+            <img src="images/1.jpeg" alt="Memory 1" />
+          </div>
+          <div class="wishes">
+            <h2>My Dearest Rahmita Mawaddhani,</h2>
+            <p class="message">
+              Selamat ulang tahun, sayang! 🎉 Hari ini adalah hari spesialmu.
+              Aku pengen ngucapin terima kasih buat kamu karena kehadiranmu
+              dihidupku sangat-sangat membuat hidupku jadi lebih berwarna syg
+              hehe. "Going to the 2025 with the person i love in 2024" wkwk
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="section2" class="section">
+        <div class="content">
+          <div class="photo">
+            <img src="images/2.jpeg" alt="Memory 2" />
+          </div>
+          <div class="wishes">
+            <p class="message">
+              Kamu tau? momen-momen yang kita alami sebelumnya, mulai dari hal
+              kecil contohnya kaya pergi mam, main, ke pandaan waktu itu.
+              Menurutku itu semua sangat-sangat berharga syg. Aku sangat-sangat
+              excited buat menerima gebrakan baru kita di tahun ini syg, first
+              of all mari kita fokus ke wishlist kita dulu yaa. lop lop
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="section3" class="section">
+        <div class="content">
+          <div class="photo">
+            <img src="images/3.jpeg" alt="Memory 5" />
+          </div>
+          <div class="wishes">
+            <p class="wishes-text">
+              Here's the wish part syg hehe : Di tahun ini, aku berharap karirmu
+              semakin lancar, kamu bisa kerja ditempat yang kamu inginkan
+              (tentunya tidak toxic seperti sebelumnya) dan kamu bisa mencapai
+              semua tujuan yang kamu impikan buat tahun ini. Untuk hubungan
+              kita, aku berharap kita bisa terus saling mendukung dan menguatkan
+              satu sama lain. Semoga cinta kita semakin kuat sampai di akhir
+              hayat, sehingga kita bisa menghadapi segala tantangan bersama
+              sampai akhir tujuan ya sayang yaitu meraih "Jannah" bersama. Aku
+              ingin kita kedepannya terus happy-happy bareng, saling bertumbuh
+              satu sama lain, saling mengingatkan untuk menjadi lebih baik lagi
+              dan tentunya semoga kita bisa meraih goals kita di tahun ini. Dan
+              buat kamu, terus jadi dirimu yang sekarang yaa sayang. Kamu itu
+              baik pol dan kamu itu tulus nya sangat luar biasa, dan itu adalah
+              salah satu hal yang aku cintai dari dirimu. Semoga kamu selalu
+              percaya pada dirimu sendiri, tetap sabar dalam menghadapi setiap
+              rintangan, dan terus bersinar dengan semua potensi yang kamu
+              miliki. Perlu kamu ingat, aku selalu ada di sini untuk memberimu
+              dukungan dan merayakan setiap pencapaianmu. Back again Selamat
+              ulang tahun, sayang! Mari kita hadapi tahun ini bareng-bareng
+              dengan penuh cinta, semangat, dan harapan yang tak terbatas!
+            </p>
+            <p class="love">With all my love ❤️</p>
+            <p class="signature">Rama</p>
+          </div>
+        </div>
+      </section>
+
+      <button class="nav-button next">Next ❯</button>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const sections = document.querySelectorAll(".section");
+        const nextButton = document.querySelector(".next");
+        let currentSection = 0;
+        let isAnimating = false;
+
+        // Modified scroll prevention to only prevent between sections
+        function preventScrollBetweenSections(e) {
+          const currentSectionEl = sections[currentSection];
+          const scrollTop = currentSectionEl.scrollTop;
+          const scrollHeight = currentSectionEl.scrollHeight;
+          const height = currentSectionEl.clientHeight;
+
+          // Allow scrolling within the current section
+          if (scrollTop === 0 && e.deltaY < 0) {
+            // Prevent scrolling up when at top
+            e.preventDefault();
+          } else if (scrollHeight - scrollTop === height && e.deltaY > 0) {
+            // Prevent scrolling down when at bottom
+            e.preventDefault();
+          }
+        }
+
+        // Modified scroll disable function
+        function setupScrollControl() {
+          document.body.style.overflow = "hidden";
+          sections.forEach((section) => {
+            section.addEventListener("wheel", preventScrollBetweenSections, {
+              passive: false,
+            });
+            section.addEventListener(
+              "touchmove",
+              (e) => {
+                const touch = e.touches[0];
+                const currentSectionEl = sections[currentSection];
+
+                if (!currentSectionEl.contains(touch.target)) {
+                  e.preventDefault();
+                }
+              },
+              { passive: false }
+            );
+          });
+        }
+
+        // Initialize
+        setupScrollControl();
+        updateNavigation();
+
+        function updateNavigation() {
+          if (currentSection === sections.length - 1) {
+            nextButton.style.display = "none";
+          } else {
+            nextButton.style.display = "block";
+          }
+        }
+
+        function showSection(index) {
+          if (isAnimating) return;
+          isAnimating = true;
+
+          // Reset scroll position of current section
+          sections[currentSection].scrollTop = 0;
+
+          // Start fade out animation
+          sections[currentSection].style.animation =
+            "fadeOutDown 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards";
+
+          setTimeout(() => {
+            sections[currentSection].classList.remove("active");
+            currentSection = index;
+
+            // Prepare next section
+            const nextSection = sections[currentSection];
+            nextSection.style.opacity = "0";
+            nextSection.style.transform = "translateY(40px)";
+            nextSection.classList.add("active");
+            nextSection.scrollTop = 0; // Reset scroll position of new section
+
+            // Smooth scroll to next section
+            nextSection.scrollIntoView({
+              behavior: "smooth",
+              block: "start",
+              inline: "start",
+            });
+
+            // Start fade in animation
+            setTimeout(() => {
+              nextSection.style.animation =
+                "fadeInUp 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards";
+
+              setTimeout(() => {
+                isAnimating = false;
+              }, 800);
+            }, 100);
+
+            updateNavigation();
+          }, 500);
+        }
+
+        nextButton.addEventListener("click", () => {
+          if (currentSection < sections.length - 1 && !isAnimating) {
+            showSection(currentSection + 1);
+          }
+        });
+
+        // Keyboard navigation
+        document.addEventListener("keydown", (e) => {
+          if (
+            (e.key === "ArrowDown" || e.key === "ArrowRight") &&
+            currentSection < sections.length - 1 &&
+            !isAnimating
+          ) {
+            const currentSectionEl = sections[currentSection];
+            const scrollTop = currentSectionEl.scrollTop;
+            const scrollHeight = currentSectionEl.scrollHeight;
+            const height = currentSectionEl.clientHeight;
+
+            // Only move to next section if we're at the bottom of current section
+            if (scrollHeight - scrollTop === height) {
+              showSection(currentSection + 1);
+            }
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
